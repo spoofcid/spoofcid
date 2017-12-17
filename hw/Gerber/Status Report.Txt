@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [spoofCID.PrjPcb]
+   Generated File[spoofCID.TXT]
+   Generated File[spoofCID.LDP]
+   Generated File[spoofCID.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 16:11:09 On 17.12.2017

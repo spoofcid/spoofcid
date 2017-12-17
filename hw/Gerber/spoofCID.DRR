@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: spoofCID.PcbDoc   17.12.2017  16:11:09
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : spoofCID.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        11.81mil (0.29997mm)     Round          64               8.68 Inch (220.41 mm)
+---------------------------------------------------------------------------
+Totals                                            64               8.68 Inch (220.41 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

@@ -1,0 +1,56 @@
+SpoofCID is an microSD to SD adapter with builtin functionality do swap Card Identification Number. It allows to use any user microSD card to act as regular size SD card with user defined card ID.
+
+DISCLAIMER
+
+THE PRODUCT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE PRODUCT OR THE USE OR OTHER DEALINGS IN THE PRODUCT. 
+
+
+LIMITATIONS
+
+1. SPI access mode is not supported. The card is functioning but spoofing is not working. This issue should not be a problem since almost all commercial applications of SD cards use SDIO(which is supported).
+2. UHS – Ultra High Speed is not supported – due to 1.8V signaling. The card is functioning with adapter but no spoofing possible. This also should not be a problem at this point. The problem occurs only when both card and host support UHS. If the card is UHS but the device is not there would not be a problem. Similarly if the Device is UHS and the card is High Speed it will still work. UHS Hosts are backward compatible by the standard. Maybe in future revisions this can be fixed. More reading at https://en.wikipedia.org/wiki/Secure_Digital#Speeds
+3. To change CID you need SD card Reader or device with SD slot that turns on the supply for at least 5 seconds (preferably more). More in operation instructions.
+4. Few cards (so far I encountered one) toggle data on rising edge. It is against standard and causes SpoofCID to skip one clock cycle. In a result it is not working.
+5. Be careful if your SD slot is metallic. SpoofCID does not have plastic cover. If unsure put isolating tape on the capacitors.
+
+
+MANUFACTURING
+1. Order PCBs using any PCB factory (ex. AllPCB)
+2. Order components. Each board bontains:
+-2.2uF 0402 capacitor x2 – any kind 
+-TS2DDR2811 x1- http://www.ti.com/product/TS2DDR2811
+-CY8C4245LQI-483 x1 - http://www.cypress.com/part/cy8c4245lqi-483
+-LED 0603 
+-uSD card slot available in aliexpress see pictures
+3. Before soldering TS2DDR2811 IC remove pin C5 ball(internally not connected).
+4. Solder all components and uSD slot
+5. Program Cypress
+6. Enjoy your new SpoofCID adapter
+
+
+OPERATION INSTRUCTIONS
+1. How it works.
+You hold your content on uSD and put it inside SpoofCID adapter. Then insert SpoofCID adapter into host. When host reads CID and the adapter changes it on the fly. Each SpoofCID adapter has an LED (random color). LED lights up on power-on. LED turns off when successful spoofing occurs. Usually after 1-3 seconds depending on the device.
+2. How to change CID.
+To change CID you need you need empty FAT32 formatted uSD card. On the card create file named conf.txt with following content:
+CID: aaaaa
+Change the CID to the one you want. Last two hex digits are checksum and are ignored. The card automatically recalculates checksum since linux/android do not read checksum correctly.
+With prepared uSD card containing only one file(if there will be more files on the card it may take forever) follow the steps:
+a. Insert SpoofCID adapter without uSD inserted(or half way inserted). The adapter will go into loader mode. In loader mode LED will slowly blink. In loader mode Host does not have access to uSD card. While blinking carefully insert uSD into SpoofCID adapter without ejecting SpoofCID adapter from reader.
+b. LED will turn off for a few seconds. During off period adapter will access conf.txt file on uSD card, read CID and write it to internal EEPROM. After successful process the LED will turn back on. It is safe now to remove SpoofCID adapter with uSD card.
+c. To confirm successful CID loading insert SpoofCID adapter with the uSD card you just used (or just uSD card) into card reader. New file named info.txt will be there. The file will contain CID of the uSD card and CID of your choice(spoofed CID).
+Example content of INFO.TXT:
+==SpoofCID info==
+Card volume label: 
+Card CID: bbbb
+Spoof CID: aaaaa
+
+NOTE: Make sure the host used for CID programming keeps the power on for at least few seconds. Otherwise the process might not complete successfully. Simplest way of doing it is to insert SpoofCID adapter without uSD card and wait for how long consistent blinking(1sec) occurs. Beware that some readers might cycle the power multiple times.
+
+3. How to obtain CID.
+a. If you want to copy uSD card. Follow the steps from point 2. with or without conf.txt file on the card.  The INFO.TXT file will contain CID of the slave card.
+b. If you want to copy SD card use SD to uSD adapter available at Aliexpress. https://pl.aliexpress.com/wholesale?catId=0&initiative_id=SB_20171114133632&SearchText=SD+to+Micro+SD+TF+Card+Reader+Adapter+FPC+
+c. Alternatively use Linux on laptop with builtin pcie SD card reader.
+d. Google is your friend.
+
+

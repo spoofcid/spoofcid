@@ -8,16 +8,16 @@ THE PRODUCT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIE
 LIMITATIONS
 
 1. SPI access mode is not supported. The card is functioning but spoofing is not working. This issue should not be a problem since almost all commercial applications of SD cards use SDIO(which is supported).
-2. UHS – Ultra High Speed is not supported – due to 1.8V signaling. The card is functioning with adapter but no spoofing possible. This also should not be a problem at this point. The problem occurs only when both card and host support UHS. If the card is UHS but the device is not there would not be a problem. Similarly if the Device is UHS and the card is High Speed it will still work. UHS Hosts are backward compatible by the standard. Maybe in future revisions this can be fixed. More reading at https://en.wikipedia.org/wiki/Secure_Digital#Speeds
+2. UHS â€“ Ultra High Speed is not supported â€“ due to 1.8V signaling. The card is functioning with adapter but no spoofing possible. This also should not be a problem at this point. The problem occurs only when both card and host support UHS. If the card is UHS but the device is not there would not be a problem. Similarly if the Device is UHS and the card is High Speed it will still work. UHS Hosts are backward compatible by the standard. Maybe in future revisions this can be fixed. More reading at https://en.wikipedia.org/wiki/Secure_Digital#Speeds
 3. To change CID you need SD card Reader or device with SD slot that turns on the supply for at least 5 seconds (preferably more). More in operation instructions.
 4. Few cards (so far I encountered one) toggle data on rising edge. It is against standard and causes SpoofCID to skip one clock cycle. In a result it is not working.
 5. Be careful if your SD slot is metallic. SpoofCID does not have plastic cover. If unsure put isolating tape on the capacitors.
 
 
 MANUFACTURING
-1. Order PCBs using any PCB factory (ex. AllPCB)
+1. Order PCBs using any PCB factory 1mm thickness(ex. AllPCB)
 2. Order components. Each board bontains:
--2.2uF 0402 capacitor x2 – any kind 
+-2.2uF 0402 capacitor x2 â€“ any kind 
 -TS2DDR2811 x1- http://www.ti.com/product/TS2DDR2811
 -CY8C4245LQI-483 x1 - http://www.cypress.com/part/cy8c4245lqi-483
 -LED 0603 
